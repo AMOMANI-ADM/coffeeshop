@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17634a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>الكوفي شوب</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>
+:root{--pri:#17634a;--acc:#c8963e;--bg:#f6f3ee;--card:#fff;--ink:#1d2320;--mut:#6b736f;--line:#e6e0d6;--ok:#1f8a4c;--warn:#b7791f;--bad:#c0392b;--r:14px;--safe:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",Tahoma,Arial,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+.ltr{direction:ltr;unicode-bidi:isolate}
+header{position:sticky;top:0;z-index:5;background:var(--pri);color:#fff;padding:10px 14px calc(10px);display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+header img{width:38px;height:38px;border-radius:50%;background:#fff;object-fit:contain}
+header h1{font-size:17px;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header button{background:rgba(255,255,255,.16);border:0;color:#fff;border-radius:10px;padding:6px 10px;font-size:13px}
+main{padding:14px 14px calc(96px + var(--safe));max-width:720px;margin:0 auto}
+nav.tabs{position:fixed;bottom:0;inset-inline:0;z-index:6;background:#fff;border-top:1px solid var(--line);display:flex;padding-bottom:var(--safe)}
+nav.tabs button{flex:1;border:0;background:none;padding:8px 2px 7px;font-size:11.5px;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.tabs button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs button.on{color:var(--pri);font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+h2{font-size:17px;margin:4px 0 10px}
+h3{font-size:15px;margin:10px 0 6px}
+.muted{color:var(--mut)}.sm{font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-weight:600;cursor:pointer}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
+.btn.acc{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.block{width:100%}.btn.sm{padding:6px 10px;font-size:13px;border-radius:10px}
+.btn:disabled{opacity:.5}
+.fld{margin-bottom:10px}.fld label{display:block;font-size:13px;color:var(--mut);margin-bottom:4px}
+.fld input,.fld select,.fld textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:2px solid var(--pri);outline-offset:-1px}
+.code{letter-spacing:10px;text-align:center;font-size:24px;direction:ltr}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font-size:13.5px}
+.chips button.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
+.prod{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:10px;display:flex;flex-direction:column;gap:6px;position:relative;text-align:start}
+.prod svg.picon{width:64px;height:64px;align-self:center}
+.prod b{font-size:14px;line-height:1.35}
+.prod .pr{color:var(--pri);font-weight:700}
+.prod .pr del{color:var(--mut);font-weight:400;font-size:12px;margin:0 4px}
+.prod .add{position:absolute;top:8px;inset-inline-end:8px;width:30px;height:30px;border-radius:50%;border:0;background:var(--pri);color:#fff;font-size:20px;line-height:1}
+.prod .cnt{position:absolute;top:8px;inset-inline-start:8px;background:var(--acc);color:#fff;border-radius:999px;min-width:22px;height:22px;font-size:12px;display:grid;place-items:center;padding:0 6px}
+.pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;background:#eef0ee;color:#444}
+.pill.ok{background:#e3f4ea;color:var(--ok)}.pill.warn{background:#fbf0dc;color:var(--warn)}.pill.bad{background:#fbe5e2;color:var(--bad)}.pill.acc{background:#f6ead3;color:#8a611d}
+.cartbar{position:fixed;inset-inline:12px;bottom:calc(64px + var(--safe));z-index:6;background:var(--acc);color:#fff;border:0;border-radius:14px;padding:13px 16px;display:flex;justify-content:space-between;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.between{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.line{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.line:last-child{border-bottom:0}
+.line .grow{flex:1;min-width:0}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:18px;line-height:1}
+.seg{display:flex;background:#eef0ee;border-radius:12px;padding:3px;gap:3px;margin-bottom:10px}
+.seg button{flex:1;border:0;background:none;border-radius:10px;padding:8px 4px;font-size:13.5px}
+.seg button.on{background:#fff;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.tot{display:flex;justify-content:space-between;padding:3px 0}
+.tot.big{font-size:18px;font-weight:800;border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
+.member{border-radius:20px;padding:18px;color:#fff;position:relative;overflow:hidden;margin-bottom:12px}
+.member .tier{font-size:13px;letter-spacing:.5px;opacity:.95}
+.member h2{color:#fff;margin:2px 0 12px;font-size:20px}
+.member .qr{background:#fff;border-radius:16px;padding:14px;display:grid;place-items:center;margin:0 auto;width:236px}
+.member .no{text-align:center;font-size:20px;font-weight:800;letter-spacing:2px;margin-top:10px}
+.t-platinum{background:linear-gradient(135deg,#4b5563,#9ca3af 55%,#e5e7eb)}
+.t-gold{background:linear-gradient(135deg,#8a5a12,#d4a437 55%,#f3d98b)}
+.t-silver{background:linear-gradient(135deg,#6b7280,#b6bcc6 55%,#e9ecef);color:#1d2320}
+.t-silver h2{color:#1d2320}
+.t-regular{background:linear-gradient(135deg,var(--pri),#2f8a69)}
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;justify-content:center}
+.sheet .in{background:var(--bg);width:100%;max-width:720px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 16px calc(16px + var(--safe))}
+.toast{position:fixed;top:12px;inset-inline:12px;z-index:30;background:#1d2320;color:#fff;border-radius:12px;padding:12px 14px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.empty{text-align:center;color:var(--mut);padding:26px 10px}
+.banner{background:#fbf0dc;border:1px solid #efd9a8;color:#6b4a10;border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:13.5px}
+.offer{display:flex;gap:12px;align-items:center}
+.offer .badge{flex:none;width:58px;height:58px;border-radius:14px;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px;text-align:center;line-height:1.1}
+.sizes{display:flex;gap:8px;margin:8px 0}
+.sizes button{flex:1;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 4px}
+.sizes button.on{border-color:var(--pri);outline:2px solid var(--pri)}
+.install{display:flex;gap:10px;align-items:center}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="icdefs" style="position:absolute;width:0;height:0;overflow:hidden"><svg width="0" height="0"><defs><linearGradient id="icCer" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="0.55" stop-color="#f4f0e8"/><stop offset="1" stop-color="#c9c1b3"/></linearGradient><linearGradient id="icSau" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf9f4"/><stop offset="1" stop-color="#cfc7b8"/></linearGradient><radialGradient id="icCof"><stop offset="0" stop-color="#7a4a2a"/><stop offset="1" stop-color="#2d180c"/></radialGradient><radialGradient id="icCre"><stop offset="0" stop-color="#d59a5c"/><stop offset=".75" stop-color="#a7662f"/><stop offset="1" stop-color="#6d3d1b"/></radialGradient><radialGradient id="icFoam"><stop offset="0" stop-color="#f1dcbc"/><stop offset="1" stop-color="#c99a63"/></radialGradient><linearGradient id="icLat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf4e6"/><stop offset="0.28" stop-color="#f0e0c6"/><stop offset="0.42" stop-color="#c4935f"/><stop offset="0.75" stop-color="#7a4a28"/><stop offset="1" stop-color="#4a2a15"/></linearGradient><linearGradient id="icIce" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9b48a"/><stop offset="0.45" stop-color="#8a5630"/><stop offset="1" stop-color="#4a2a15"/></linearGradient><linearGradient id="icGls" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0.55"/><stop offset="0.25" stop-color="#fff" stop-opacity="0.08"/><stop offset="0.8" stop-color="#fff" stop-opacity="0.04"/><stop offset="1" stop-color="#fff" stop-opacity="0.4"/></linearGradient><linearGradient id="icTea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e58a32"/><stop offset="1" stop-color="#8c3c10"/></linearGradient><linearGradient id="icJui" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc23d"/><stop offset="1" stop-color="#f27a12"/></linearGradient><linearGradient id="icPas" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6cf85"/><stop offset="0.55" stop-color="#d9963f"/><stop offset="1" stop-color="#a8601c"/></linearGradient><linearGradient id="icBrd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3d6a0"/><stop offset="1" stop-color="#c88f49"/></linearGradient><linearGradient id="icSpg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7e0ae"/><stop offset="1" stop-color="#e0b56e"/></linearGradient><linearGradient id="icChc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c4a2a"/><stop offset="1" stop-color="#3d2212"/></linearGradient><radialGradient id="icCok" cx=".4" cy=".35"><stop offset="0" stop-color="#ecc58a"/><stop offset="1" stop-color="#b57c3c"/></radialGradient><linearGradient id="icDou" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8b56e"/><stop offset="1" stop-color="#b0702c"/></linearGradient><linearGradient id="icPnk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbb0c8"/><stop offset="1" stop-color="#e0608c"/></linearGradient><linearGradient id="icRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0554a"/><stop offset="1" stop-color="#b81f24"/></linearGradient></defs></svg></div>
+<header><img id="hlogo" alt=""><h1 id="htitle"></h1><button id="hlang" type="button">EN</button></header>
+<main id="main"><div class="empty"><span class="spin"></span></div></main>
+<div id="cartbar"></div>
+<nav class="tabs" id="tabs"></nav>
+<div id="sheet"></div>
+<div id="toast"></div>
+<script src="qrcode.min.js"></script>
+<script src="config.js"></script>
+<script>
+'use strict';
+/* Customer app: talks only to /api/c on the same server. The sign-in token stays on this phone. */
+const ICONS={
+ cup:'<ellipse cx="30" cy="55" rx="25" ry="5" fill="url(#icSau)" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="54" rx="13" ry="2.3" fill="#b7ae9f" opacity=".5"/><path d="M46 30h4a7.5 7.5 0 0 1 0 15h-7" fill="none" stroke="#d8d2c6" stroke-width="3.6" stroke-linecap="round"/><path d="M13 24h34v16a17 16 0 0 1-34 0z" fill="url(#icCer)" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="24" rx="17" ry="4.6" fill="#fbf9f4" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="24.5" rx="14.8" ry="3.4" fill="url(#icCof)"/><g fill="none" stroke="#a8a297" stroke-width="2" stroke-linecap="round" opacity=".65"><path d="M23 16c-2.5-3 2.5-5 0-9"/><path d="M31 16c-2.5-3 2.5-5 0-9"/><path d="M39 16c-2.5-3 2.5-5 0-9"/></g>',
+ espresso:'<ellipse cx="30" cy="55" rx="25" ry="5" fill="url(#icSau)" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="54" rx="13" ry="2.3" fill="#b7ae9f" opacity=".5"/><path d="M41 38h4a7.5 7.5 0 0 1 0 15h-7" fill="none" stroke="#d8d2c6" stroke-width="3.6" stroke-linecap="round"/><path d="M18 32h24v11a12 11 0 0 1-24 0z" fill="url(#icCer)" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="32" rx="12" ry="4.6" fill="#fbf9f4" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="32.5" rx="9.8" ry="3.4" fill="url(#icCre)"/><path d="M24 32.5c2-1 4 .8 6 .2s4-1 6 0" fill="none" stroke="#f0cf9e" stroke-width="1" opacity=".8"/><g fill="none" stroke="#a8a297" stroke-width="2" stroke-linecap="round" opacity=".65"><path d="M26 25c-2-3 2-4 0-8"/><path d="M34 25c-2-3 2-4 0-8"/></g>',
+ cappuccino:'<ellipse cx="30" cy="55" rx="25" ry="5" fill="url(#icSau)" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="54" rx="13" ry="2.3" fill="#b7ae9f" opacity=".5"/><path d="M46 30h4a7.5 7.5 0 0 1 0 15h-7" fill="none" stroke="#d8d2c6" stroke-width="3.6" stroke-linecap="round"/><path d="M13 24h34v16a17 16 0 0 1-34 0z" fill="url(#icCer)" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="24" rx="17" ry="4.6" fill="#fbf9f4" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="24.5" rx="14.8" ry="3.4" fill="url(#icFoam)"/><path d="M30 28c-5-2-8-3-8-4.3 0-1.3 3-1.6 5.4-.8.9.3 1.8.3 2.6.6.8-.3 1.7-.3 2.6-.6 2.4-.8 5.4-.5 5.4.8 0 1.3-3 2.3-8 4.3z" fill="#fffaf0" opacity=".95"/>',
+ latte:'<ellipse cx="30" cy="58" rx="15" ry="3" fill="#000" opacity=".12"/><path d="M41 22h5a6 6 0 0 1 6 6v8a6 6 0 0 1-6 6h-5" fill="none" stroke="#c6d2d4" stroke-width="3"/><path d="M17 14h26l-2 41a4 4 0 0 1-4 3.5H23a4 4 0 0 1-4-3.5z" fill="url(#icLat)"/><ellipse cx="30" cy="14" rx="13" ry="3.2" fill="#fff8ec" stroke="#d8c8ac" stroke-width=".6"/><path d="M17 14h26l-2 41a4 4 0 0 1-4 3.5H23a4 4 0 0 1-4-3.5z" fill="url(#icGls)" stroke="#9fb0b5" stroke-width=".9"/>',
+ iced:'<ellipse cx="30" cy="59" rx="15" ry="3" fill="#000" opacity=".12"/><path d="M34 15l5-13h6" fill="none" stroke="#2f8f6f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 15h25l-3 41a3.5 3.5 0 0 1-3.5 3H24a3.5 3.5 0 0 1-3.5-3z" fill="url(#icIce)"/><g stroke="#fff" stroke-opacity=".7" stroke-width=".7" fill="#fff" fill-opacity=".38"><rect x="21" y="18" width="9" height="9" rx="2" transform="rotate(-12 25 22)"/><rect x="31" y="21" width="8" height="8" rx="2" transform="rotate(16 35 25)"/><rect x="24" y="30" width="8" height="8" rx="2" transform="rotate(10 28 34)"/></g><ellipse cx="30" cy="15" rx="12.5" ry="2.8" fill="#e2c49c" stroke="#9fb0b5" stroke-width=".7"/><path d="M17.5 15h25l-3 41a3.5 3.5 0 0 1-3.5 3H24a3.5 3.5 0 0 1-3.5-3z" fill="url(#icGls)" stroke="#9fb0b5" stroke-width=".9"/>',
+ tea:'<ellipse cx="30" cy="55" rx="25" ry="5" fill="url(#icSau)" stroke="#aaa294" stroke-width=".7"/><ellipse cx="30" cy="54" rx="11" ry="2.3" fill="#b7ae9f" opacity=".5"/><path d="M44 28h3a6.5 6.5 0 0 1 0 13h-5" fill="none" stroke="#c6d2d4" stroke-width="3"/><path d="M15 22h30l-2 25a7 7 0 0 1-7 6.5H24a7 7 0 0 1-7-6.5z" fill="url(#icTea)"/><ellipse cx="30" cy="22" rx="15" ry="3.6" fill="#ee9f4b" stroke="#a9bcc0" stroke-width=".7"/><path d="M15 22h30l-2 25a7 7 0 0 1-7 6.5H24a7 7 0 0 1-7-6.5z" fill="url(#icGls)" stroke="#9fb0b5" stroke-width=".9"/><path d="M40 21c3 4 3 8 2 12" fill="none" stroke="#efe9dc" stroke-width="1"/><rect x="38.5" y="33" width="7" height="8" rx="1" fill="#f7f1e2" stroke="#c9bb9c" stroke-width=".6"/><g fill="none" stroke="#a8a297" stroke-width="2" stroke-linecap="round" opacity=".65"><path d="M24 14c-2-3 2-4 0-8"/><path d="M33 14c-2-3 2-4 0-8"/></g>',
+ juice:'<ellipse cx="30" cy="59" rx="14" ry="3" fill="#000" opacity=".12"/><path d="M31 15l6-13h6" fill="none" stroke="#d8342c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 15h24l-2.5 41a3.5 3.5 0 0 1-3.5 3H24a3.5 3.5 0 0 1-3.5-3z" fill="url(#icJui)"/><ellipse cx="30" cy="15" rx="12" ry="2.8" fill="#ffd36a" stroke="#c9a14a" stroke-width=".6"/><circle cx="43" cy="14" r="9" fill="#f68a12"/><circle cx="43" cy="14" r="7.5" fill="#ffd98a"/><g stroke="#f68a12" stroke-width="1"><path d="M43 6.5v15M35.5 14h15M37.7 8.7l10.6 10.6M48.3 8.7L37.7 19.3"/></g><path d="M18 15h24l-2.5 41a3.5 3.5 0 0 1-3.5 3H24a3.5 3.5 0 0 1-3.5-3z" fill="url(#icGls)" stroke="#9fb0b5" stroke-width=".9"/>',
+ croissant:'<ellipse cx="32" cy="52" rx="24" ry="4" fill="#000" opacity=".12"/><path d="M5 44C4 28 16 13 32 13s28 15 27 31c0 3-4 4-6 2-4-6-9-13-21-13S15 40 11 46c-2 2-6 1-6-2z" fill="url(#icPas)" stroke="#8f5317" stroke-width=".8"/><g fill="none" stroke="#9a5a1b" stroke-width="1.4" stroke-linecap="round"><path d="M22 15.5c-2 6-2 12 0 20"/><path d="M42 15.5c2 6 2 12 0 20"/><path d="M12 24c0 6 1 12 4 17"/><path d="M52 24c0 6-1 12-4 17"/></g><path d="M27 17c3-1 7-1 10 0" fill="none" stroke="#fbe5b5" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>',
+ cake:'<ellipse cx="32" cy="56" rx="26" ry="4" fill="#000" opacity=".12"/><path d="M6 30l42-14 10 12v25H6z" fill="url(#icSpg)" stroke="#a97a3c" stroke-width=".7"/><path d="M6 39h52v5H6z" fill="#fff5e4"/><path d="M6 44h52v3H6z" fill="#e0608c" opacity=".7"/><path d="M6 30l42-14 10 12z" fill="#fff8ee" stroke="#d6c7ad" stroke-width=".6"/><path d="M6 30h52v3c-3 3-5 3-7 0-3 4-6 4-9 0-3 3-6 3-9 0-3 4-6 4-9 0-3 3-6 3-9 0-3 3-6 3-9 0z" fill="#fff8ee" stroke="#e2d4bb" stroke-width=".5"/><circle cx="42" cy="20" r="6.5" fill="url(#icRed)"/><path d="M42 14c1-2 3-3 5-3" fill="none" stroke="#3f8b3a" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="40" cy="18" rx="1.6" ry="1" fill="#fff" opacity=".6"/>',
+ cookie:'<ellipse cx="32" cy="56" rx="23" ry="3.5" fill="#000" opacity=".12"/><path d="M32 7c14 0 25 11 25 24.5S46 56 32 56 7 45 7 31.5 18 7 32 7z" fill="url(#icCok)" stroke="#8f5c26" stroke-width=".8"/><g fill="url(#icChc)"><path d="M20 19l6-2 3 5-5 4-5-3z"/><path d="M38 15l6 1 1 6-6 2-3-5z"/><path d="M15 34l5-2 4 4-3 5-6-2z"/><path d="M32 30l7-1 2 6-6 3-4-4z"/><path d="M29 44l6-1 2 5-5 3-5-3z"/><path d="M45 39l4 1v5l-5 1-2-4z"/></g><g fill="#8f5c26" opacity=".45"><circle cx="28" cy="13" r="1"/><circle cx="48" cy="28" r="1"/><circle cx="24" cy="29" r="1"/><circle cx="40" cy="46" r="1"/></g>',
+ sandwich:'<ellipse cx="32" cy="56" rx="26" ry="4" fill="#000" opacity=".12"/><path d="M7 46h50v4a6 6 0 0 1-6 6H13a6 6 0 0 1-6-6z" fill="url(#icBrd)" stroke="#9c6a2e" stroke-width=".7"/><path d="M5 40h54l-3 7H8z" fill="#c9503a"/><path d="M6 37h52l-4 6-6-3-7 4-7-4-7 4-7-4-6 3z" fill="#f6c844"/><path d="M4 34c4-3 7 2 11 0s7 2 11 0 7 2 11 0 7 2 11 0 7-3 12 0v3c-4 3-8-1-12 1s-7-1-11 1-7-1-11 1-7-1-11 1-7-3-11-1z" fill="#6aa83f" stroke="#477c26" stroke-width=".5"/><path d="M7 33c0-14 11-22 25-22s25 8 25 22z" fill="url(#icBrd)" stroke="#9c6a2e" stroke-width=".7"/><g fill="#fdf1cf"><ellipse cx="22" cy="19" rx="2" ry="1" transform="rotate(-25 22 19)"/><ellipse cx="33" cy="16" rx="2" ry="1"/><ellipse cx="44" cy="20" rx="2" ry="1" transform="rotate(25 44 20)"/><ellipse cx="28" cy="25" rx="2" ry="1"/><ellipse cx="39" cy="26" rx="2" ry="1"/></g>',
+ donut:'<ellipse cx="32" cy="57" rx="23" ry="3.5" fill="#000" opacity=".12"/><path fill-rule="evenodd" d="M32 8c14 0 25 10.500 25 24S46 56 32 56 7 45.500 7 32 18 8 32 8zm0 16.500c-4.500 0-8 3.300-8 7.500s3.500 7.500 8 7.500 8-3.300 8-7.500-3.500-7.500-8-7.500z" fill="url(#icDou)" stroke="#8f5a1f" stroke-width=".7"/><path fill-rule="evenodd" d="M32 9.500c13 0 23.500 9.800 23.500 22 0 5-3 5-5 3-2-3-4 1-6.500 3-2 2-4-1-6 2-3 3-6 3-9 1-2-2-5 1-7-2-2-2-4 0-6-1-3-1-6 0-8-4 0-13 7-24 24-24zm0 15c-4.500 0-8 3.300-8 7.500s3.500 7.500 8 7.500 8-3.300 8-7.500-3.500-7.500-8-7.500z" fill="url(#icPnk)"/><g stroke-width="1.8" stroke-linecap="round"><path d="M18 17l3 2" stroke="#fff"/><path d="M42 13l-2 3" stroke="#ffe16b"/><path d="M48 25l-3 1" stroke="#6cd0e6"/><path d="M14 29l3-1" stroke="#ffe16b"/><path d="M28 14l3 1" stroke="#6cd0e6"/><path d="M47 34l-2-2" stroke="#fff"/><path d="M18 36l2-2" stroke="#6cd0e6"/></g>',
+};
+const iconOf=p=>{if(p.icon&&ICONS[p.icon])return p.icon;const n=p.name||'';if(/إسبريسو/.test(n))return'espresso';if(/كابتشينو/.test(n)&&!/آيس|بارد/.test(n))return'cappuccino';if(/لاتيه/.test(n)&&!/آيس|بارد/.test(n))return'latte';if(/شاي/.test(n))return'tea';if(/عصير/.test(n))return'juice';if(/كرواسون/.test(n))return'croissant';if(/كيك/.test(n))return'cake';if(/كوكيز/.test(n))return'cookie';if(/دونات/.test(n))return'donut';if(/ساندويتش/.test(n))return'sandwich';const c=p.cat||'';if(/بارد/.test(c))return'iced';if(/مخبوز/.test(c))return'croissant';if(/حلوي/.test(c))return'cake';if(/ساندويتش/.test(c))return'sandwich';return'cup'};
+const iconSvg=p=>'<svg class="picon" viewBox="0 0 64 64" aria-hidden="true">'+ICONS[iconOf(p)]+'</svg>';
+
+const EN={'أكمل بياناتك: الاسم والجوال.':'Complete your details: name and mobile.','أُرسل طلبك، ويظهر رقمه عند استلام المحل له.':'Order sent; its number appears when the shop receives it.','بانتظار المحل':'Waiting for the shop','الحساب موقوف.':'Account blocked.','نوع الطلب غير متاح.':'Order type not available.','الفرع غير متاح.':'Branch not available.','الطاولة غير متاحة.':'Table not available.','الطلب غير صحيح.':'Invalid order.','أحد الأصناف لم يعد متاحًا.':'An item is no longer available.','الكمية غير صحيحة.':'Invalid quantity.','أقل من الحد الأدنى للتوصيل.':'Below the delivery minimum.','المحفظة غير متاحة.':'Wallet not available.','الباقة لم تعد متاحة.':'Plan no longer available.','المبلغ غير صحيح.':'Invalid amount.','القائمة':'Menu','العروض':'Offers','بطاقتي':'My card','طلباتي':'Orders','حسابي':'Account','الكل':'All','أضف':'Add','السلة':'Cart','عرض السلة':'View cart','إتمام الطلب':'Place order','نوع الطلب':'Order type','استلام من المحل':'Pickup','داخل المحل':'Dine in','توصيل':'Delivery','الطاولة':'Table','اختر الطاولة':'Choose a table','عنوان التوصيل':'Delivery address','ملاحظة':'Note','الدفع':'Payment','الدفع في المحل':'Pay at the shop','من المحفظة':'From wallet','الإجمالي التقريبي':'Estimated total','رسوم التوصيل':'Delivery fee','خصم العروض':'Offer savings','خصم الاشتراك':'Subscription discount','الفرع':'Branch','صغير':'Small','وسط':'Medium','كبير':'Large','الحجم':'Size','إضافة إلى السلة':'Add to cart','تسجيل الدخول':'Sign in','البريد الإلكتروني':'Email','إرسال الرمز':'Send code','الرمز المرسل إلى بريدك':'Code sent to your email','تأكيد':'Confirm','الاسم':'Name','الجوال':'Mobile','حساب جديد':'New account','أنشئ حسابك: أدخل اسمك وجوالك ثم أرسل الرمز.':'Create your account: enter your name and mobile, then send the code.','تغيير البريد':'Change email','الخروج':'Sign out','المحفظة':'Wallet','الرصيد':'Balance','شحن المحفظة':'Top up wallet','الاشتراكات':'Subscriptions','اشتراك جديد':'New subscription','باقات الاشتراك':'Subscription plans','طلباتك':'Your requests','لا توجد طلبات بعد.':'No orders yet.','جديد':'New','قيد التحضير':'Preparing','جاهز':'Ready','مكتمل':'Done','ملغي':'Cancelled','بانتظار التأكيد':'Awaiting confirmation','مؤكد':'Confirmed','مرفوض':'Rejected','ساري':'Active','منتهٍ':'Ended','لم يبدأ':'Not started','الطلب':'Order','الرقم':'Number','المستوى':'Level','بلاتينيوم':'Platinum','ذهبي':'Gold','فضي':'Silver','عادي':'Regular','اعرض هذا الرمز للكاشير ليتعرف عليك ويضيف مزاياك.':'Show this code to the cashier to identify you and apply your benefits.','المبلغ':'Amount','الباقة':'Plan','إرسال الطلب':'Send request','أدخل الرمز المرسل إلى بريدك لتأكيد الطلب.':'Enter the code sent to your email to confirm.','تدفع في المحل، ويؤكد الكاشير الطلب بعد استلام المبلغ.':'You pay at the shop; the cashier confirms after receiving the payment.','أُرسل طلبك.':'Your request was sent.','أُرسل طلبك برقم ':'Order sent, number ','السعر النهائي يُحسب عند الكاشير.':'The final price is confirmed by the cashier.','لا توجد عروض حاليًا.':'No offers right now.','حتى ':'Until ','اشترِ ':'Buy ',' واحصل على ':' get ',' مجانًا':' free','خصم ':'Off ','شهري':'Monthly','سنوي':'Yearly','خصم المشتريات ':'Purchase discount ','بدل ':'Instead of ','التطبيق غير متاح الآن.':'The app is not available right now.','لا يمكن تسجيل الدخول الآن: إعدادات البريد في البرنامج غير مكتملة.':'Sign-in is unavailable: the shop has not finished its email settings.','الرمز غير صحيح أو انتهت صلاحيته.':'The code is wrong or has expired.','طلبات كثيرة. حاول بعد قليل.':'Too many requests. Try again later.','تعذر إرسال البريد. حاول لاحقًا.':'Could not send the email. Try later.','أدخل بريدًا إلكترونيًا صحيحًا.':'Enter a valid email.','تعذر الاتصال بالخادم.':'Could not reach the server.','السلة فارغة.':'The cart is empty.','الرصيد لا يكفي.':'The balance is not enough.','أدخل عنوان التوصيل.':'Enter the delivery address.','أقل مبلغ للتوصيل ':'Minimum for delivery ','حفظ':'Save','بياناتي':'My details','حُفظت بياناتك.':'Your details were saved.','ثبّت التطبيق على هاتفك':'Install the app on your phone','تثبيت':'Install','في آيفون: زر المشاركة ثم «إضافة إلى الشاشة الرئيسية».':'On iPhone: Share, then "Add to Home Screen".','لا توجد محفظة بعد. اطلب الشحن وتُنشأ محفظتك عند تأكيد الكاشير.':'No wallet yet. Ask for a top-up and the cashier creates it on confirmation.','لا يوجد اشتراك.':'No subscription.','إلغاء':'Cancel','إغلاق':'Close','رمز التأكيد':'Confirmation code','أُرسل الرمز إلى ':'Code sent to ','سجّل الدخول للطلب والاشتراك وشحن المحفظة.':'Sign in to order, subscribe and top up your wallet.','رقم العضوية':'Member number','نسبة خصم المحفظة ':'Wallet discount ','طلب سابق':'Previous order','أعد الطلب':'Order again','سبب الرفض: ':'Reason: ','مرجع ':'Ref ','يُضاف إلى الطلب':'Added to the order','طلب شحن':'Top-up request','طلب اشتراك':'Subscription request','أدخل مبلغًا بين 1 و10000.':'Enter an amount between 1 and 10000.','اختر الباقة.':'Choose a plan.','الجوال غير صحيح.':'Invalid mobile number.','أدخل اسمك.':'Enter your name.'};
+let LANG=(()=>{try{return localStorage.getItem('app_lang')||''}catch(e){return''}})();
+const T=s=>LANG==='en'?(EN[s]||s):s;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=s=>document.querySelector(s);
+const r2=n=>Math.round((+n||0)*100)/100;
+const num=n=>r2(n).toLocaleString(LANG==='en'?'en-US':'ar-SA-u-nu-latn',{minimumFractionDigits:2,maximumFractionDigits:2});
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}};
+const ST={info:null,menu:null,me:null,tab:'menu',cat:'',branch:store.get('app_branch')||'',cart:JSON.parse(store.get('app_cart')||'[]'),type:'',table:'',address:store.get('app_addr')||'',note:'',pay:'counter',wallet:'',login:{step:'email',email:store.get('app_email')||'',name:'',phone:'',code:''},busy:false};
+let TOKEN=store.get('app_token');
+/* Supabase mode: when config.js gives a project, the same screens talk to Supabase instead of /api/c.
+   Customers sign in with the code Supabase emails them; the shop's program syncs menu, orders and requests. */
+const SB=window.SB_CONFIG||null;
+let SESS=null;try{SESS=JSON.parse(localStorage.getItem('sb_sess')||'null')}catch(e){}
+function setSess(x){SESS=x&&x.access_token?{access_token:x.access_token,refresh_token:x.refresh_token,expires_at:x.expires_at||Math.floor(Date.now()/1000)+(x.expires_in||3600)}:null;try{SESS?localStorage.setItem('sb_sess',JSON.stringify(SESS)):localStorage.removeItem('sb_sess')}catch(e){}TOKEN=SESS?'sb':null}
+async function sbRefresh(){try{const r=await fetch(SB.url+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:SB.key,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:SESS.refresh_token})});setSess(r.ok?await r.json():null)}catch(e){}}
+async function sbFetch(path,o={}){if(o.auth!==false&&SESS&&SESS.expires_at*1000<Date.now()+60000)await sbRefresh();const h=Object.assign({apikey:SB.key,'Content-Type':'application/json'},o.headers||{});if(o.auth!==false&&SESS)h.Authorization='Bearer '+SESS.access_token;
+  const r=await fetch(SB.url+path,{method:o.method||'GET',headers:h,body:o.body?JSON.stringify(o.body):undefined});let j=null;try{j=await r.json()}catch(e){}return{ok:r.ok,status:r.status,j}}
+let CAT=null;
+async function catalog(force){if(!CAT||force){const r=await sbFetch('/rest/v1/catalog?id=eq.1&select=data',{auth:false});if(r.ok&&r.j&&r.j[0])CAT=r.j[0].data}return CAT}
+const tableNo=id=>{if(!id||!CAT)return'';for(const b of Object.values(CAT.tables||{}))for(const t of b)if(t.id===id)return String(t.no);return''};
+const otpErr=r=>({ok:false,j:{error:r.status===429?'too_many':'mail_failed'}});
+async function sbApi(path,opt){const body=opt.body||{},P=path.split('?')[0];try{
+  if(P==='/info'){const c=await catalog(true);if(!c)return{ok:false,j:{error:'net'}};return{ok:true,j:{on:!!c.on,mailReady:true,shop:c.shop||{},types:c.types||['take'],deliveryFee:+c.deliveryFee||0,deliveryMin:+c.deliveryMin||0,branches:(c.branches&&c.branches.length)?c.branches:[{id:'b_main',name:'الفرع الرئيسي',nameEn:'Main branch'}]}}}
+  if(P==='/menu'){const c=await catalog();if(!c||!c.on)return{ok:false,j:{error:'off'}};const br=new URLSearchParams(path.split('?')[1]||'').get('branch')||'b_main';return{ok:true,j:{cats:c.cats||[],products:c.products||[],offers:c.offers||[],plans:c.plans||[],tables:(c.tables||{})[br]||[]}}}
+  if(P==='/code'){if(body.purpose){if(!ST.me)return{ok:false,status:401,j:{error:'signin'}};const r=await sbFetch('/auth/v1/otp',{method:'POST',auth:false,body:{email:ST.me.email,create_user:false}});return r.ok?{ok:true,j:{ok:true}}:otpErr(r)}
+    const r=await sbFetch('/auth/v1/otp',{method:'POST',auth:false,body:{email:body.email,create_user:true,data:{name:body.name||'',phone:body.phone||''}}});return r.ok?{ok:true,j:{ok:true}}:otpErr(r)}
+  if(P==='/verify'){const r=await sbFetch('/auth/v1/verify',{method:'POST',auth:false,body:{type:'email',email:body.email,token:body.code}});if(!r.ok)return{ok:false,j:{error:'wrong'}};setSess(r.j);return{ok:true,j:{token:'sb'}}}
+  if(P==='/me'){if(!SESS)return{ok:false,status:401,j:{error:'signin'}};const[c,o,q]=await Promise.all([sbFetch('/rest/v1/customers?select=*'),sbFetch('/rest/v1/orders?select=*&order=created_at.desc&limit=20'),sbFetch('/rest/v1/requests?select=*&order=created_at.desc&limit=20')]);
+    if(c.status===401){setSess(null);ST.me=null;return{ok:false,status:401,j:{error:'signin'}}}const me=(c.j||[])[0];if(!me)return{ok:false,j:{error:'net'}};if(me.blocked){setSess(null);return{ok:false,status:403,j:{error:'blocked'}}}
+    return{ok:true,j:{id:me.id,no:me.no,name:me.name,email:me.email,phone:me.phone,tier:me.tier,wallets:me.wallets||[],subs:me.subs||[],
+      orders:(o.j||[]).map(x=>({id:x.id,no:x.no||'',status:x.status,type:x.type,table:tableNo(x.table_id),at:x.created_at,total:+x.total,lines:x.items,reject:x.reject})),
+      requests:(q.j||[]).map(x=>({id:x.id,kind:x.kind,status:x.status,at:x.created_at,amount:+x.amount,planName:x.plan_name,reason:x.reason,ref:x.ref}))}}}
+  if(P==='/orders'){const r=await sbFetch('/rest/v1/orders',{method:'POST',headers:{Prefer:'return=minimal'},body:{branch:body.branch,type:body.type,table_id:body.table||'',address:body.address||'',note:body.note||'',pay:body.pay==='wallet'?'wallet':'counter',wallet:body.wallet||'',items:body.items}});return r.ok?{ok:true,j:{ok:true,no:''}}:{ok:false,j:{error:r.status===401?'signin':'net'}}}
+  if(P==='/requests'){const v=await sbFetch('/auth/v1/verify',{method:'POST',auth:false,body:{type:'email',email:ST.me.email,token:body.code}});if(!v.ok)return{ok:false,j:{error:'wrong'}};setSess(v.j);
+    const r=await sbFetch('/rest/v1/requests',{method:'POST',headers:{Prefer:'return=representation'},body:{kind:body.kind,plan:body.plan||'',amount:body.kind==='deposit'?+body.amount:0,wallet:body.wallet||'',branch:body.branch||'b_main'}});
+    return r.ok?{ok:true,j:{ok:true,ref:(r.j&&r.j[0]&&r.j[0].ref)||''}}:{ok:false,j:{error:'net'}}}
+  if(P==='/profile'){const r=await sbFetch('/rest/v1/rpc/update_profile',{method:'POST',body:{p_name:body.name,p_phone:body.phone}});return r.ok?{ok:true,j:{ok:true}}:{ok:false,j:{error:'bad'}}}
+  if(P==='/logout'){await sbFetch('/auth/v1/logout',{method:'POST'});setSess(null);return{ok:true,j:{ok:true}}}
+  }catch(e){return{ok:false,status:0,j:{error:'net'}}}return{ok:false,j:{error:'nf'}}}
+if(SB)TOKEN=SESS?'sb':null;
+const money=n=>num(n)+' '+esc(ST.info?.shop?.currency||'');
+const nm=x=>LANG==='en'?(x.nameEn||x.name):(x.name||x.nameEn);
+function toast(m){const t=$('#toast');t.innerHTML='<div class="toast" role="status">'+esc(m)+'</div>';clearTimeout(toast.t);toast.t=setTimeout(()=>t.innerHTML='',3800)}
+async function api(path,opt={}){if(SB)return sbApi(path,opt);
+  const h={'Content-Type':'application/json'};if(TOKEN)h.Authorization='Bearer '+TOKEN;
+  try{const r=await fetch('/api/c'+path,Object.assign({headers:h},opt,opt.body?{body:JSON.stringify(opt.body),method:opt.method||'POST'}:{}));let j={};try{j=await r.json()}catch(e){}
+    if(r.status===401&&j.error==='signin'){TOKEN=null;store.set('app_token',null);ST.me=null}
+    return{ok:r.ok,status:r.status,j}}catch(e){return{ok:false,status:0,j:{error:'net'}}}}
+const ERRS={net:'تعذر الاتصال بالخادم.',wrong:'الرمز غير صحيح أو انتهت صلاحيته.',too_many:'طلبات كثيرة. حاول بعد قليل.',mail_failed:'تعذر إرسال البريد. حاول لاحقًا.',mail_not_ready:'لا يمكن تسجيل الدخول الآن: إعدادات البريد في البرنامج غير مكتملة.',email:'أدخل بريدًا إلكترونيًا صحيحًا.',off:'التطبيق غير متاح الآن.',balance:'الرصيد لا يكفي.',address:'أدخل عنوان التوصيل.',amount:'أدخل مبلغًا بين 1 و10000.',plan:'اختر الباقة.'};
+const errMsg=j=>T(ERRS[j&&j.error]||'تعذر الاتصال بالخادم.')+(j&&j.error&&!ERRS[j.error]?' ('+j.error+')':'');
+
+/* ---------- data ---------- */
+const prodBy=id=>(ST.menu?.products||[]).find(p=>p.id===id);
+const liveOffers=()=>ST.menu?.offers||[];
+const offerHits=(o,p)=>o.targetType==='all'||(o.targetType==='cat'&&o.target===p.cat)||(o.targetType==='product'&&o.target===p.id);
+function offerDisc(o,price,qty){const b=price*qty;if(o.type==='percent')return r2(b*(+o.value||0)/100);if(o.type==='amount')return r2(Math.min((+o.value||0)*qty*(1+tax()/100),b));if(o.type==='bxgy'){const x=+o.buy||0,y=+o.get||0;if(x<1||y<1)return 0;return r2(Math.floor(qty/(x+y))*y*price)}return 0}
+const tax=()=>+(ST.info?.shop?.taxRate??15);
+const sizePrice=(p,z)=>!p.sized?p.price:z==='s'?(p.priceS||p.price):z==='l'?(p.priceL||p.price):p.price;
+const bestDisc=(p,price,qty)=>Math.max(0,...liveOffers().filter(o=>offerHits(o,p)).map(o=>offerDisc(o,price,qty)));
+function cartCalc(){let sub=0,disc=0;const lines=ST.cart.map(c=>{const p=prodBy(c.p);if(!p)return null;const price=sizePrice(p,c.size),d=bestDisc(p,price,c.qty);sub+=price*c.qty;disc+=d;return{c,p,price,d,net:r2(price*c.qty-d)}}).filter(Boolean);
+  const s=(ST.me?.subs||[]).find(x=>x.state==='live'&&x.branch===(ST.branch||'b_main')),sd=s?r2((sub-disc)*(+s.discount||0)/100):0,fee=ST.type==='deliver'?+ST.info.deliveryFee||0:0;
+  return{lines,sub:r2(sub),disc:r2(disc),sd,fee,total:r2(sub-disc-sd+fee),subPlan:s}}
+const saveCart=()=>store.set('app_cart',JSON.stringify(ST.cart));
+const cartCount=()=>ST.cart.reduce((a,c)=>a+c.qty,0);
+async function loadMenu(){const r=await api('/menu?branch='+encodeURIComponent(ST.branch||'b_main'));if(r.ok){ST.menu=r.j;ST.cart=ST.cart.filter(c=>prodBy(c.p));saveCart()}}
+async function loadMe(){if(!TOKEN){ST.me=null;return}const r=await api('/me');if(r.ok)ST.me=r.j}
+
+/* ---------- views ---------- */
+const TIERS={platinum:['بلاتينيوم','t-platinum'],gold:['ذهبي','t-gold'],silver:['فضي','t-silver'],'':['عادي','t-regular']};
+const tierOf=me=>TIERS[me&&me.tier in TIERS?me.tier:'']||TIERS[''];
+const ORD={rejected:['مرفوض','bad'],new:['جديد','warn'],prep:['قيد التحضير','acc'],ready:['جاهز','ok'],done:['مكتمل',''],cancel:['ملغي','bad']};
+const REJ={off:'التطبيق غير متاح الآن.',blocked:'الحساب موقوف.',type:'نوع الطلب غير متاح.',branch:'الفرع غير متاح.',table:'الطاولة غير متاحة.',address:'أدخل عنوان التوصيل.',items:'الطلب غير صحيح.',product:'أحد الأصناف لم يعد متاحًا.',qty:'الكمية غير صحيحة.',min:'أقل من الحد الأدنى للتوصيل.',wallet:'المحفظة غير متاحة.',balance:'الرصيد لا يكفي.',plan:'الباقة لم تعد متاحة.',amount:'المبلغ غير صحيح.'};
+const REQ={pending:['بانتظار التأكيد','warn'],done:['مؤكد','ok'],rejected:['مرفوض','bad']};
+const SUBST={live:['ساري','ok'],ended:['منتهٍ',''],soon:['لم يبدأ','warn'],cancelled:['ملغي','bad']};
+const pill=(t,c)=>'<span class="pill '+(c||'')+'">'+esc(T(t))+'</span>';
+const TABS=[['menu','القائمة','<path d="M4 6h16M4 12h16M4 18h10"/>'],['offers','العروض','<path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.5"/>'],['card','بطاقتي','<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>'],['orders','طلباتي','<path d="M6 2h12l2 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/><path d="M4 6h16M9 11h6M9 15h6"/>'],['account','حسابي','<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>']];
+function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l,ic])=>'<button type="button" data-go="'+k+'" class="'+(ST.tab===k?'on':'')+'"><svg viewBox="0 0 24 24">'+ic+'</svg>'+esc(T(l))+'</button>').join('')}
+function renderHeader(){const s=ST.info?.shop||{};$('#htitle').textContent=LANG==='en'?(s.displayEn||s.shopName||'Coffee shop'):(s.displayAr||s.shopName||'الكوفي شوب');$('#hlogo').src=s.logo||'icon-192.png';$('#hlang').textContent=LANG==='en'?'ع':'EN';document.documentElement.lang=LANG==='en'?'en':'ar';document.documentElement.dir=LANG==='en'?'ltr':'rtl';document.title=$('#htitle').textContent;if(s.primaryColor)document.documentElement.style.setProperty('--pri',s.primaryColor);if(s.accentColor)document.documentElement.style.setProperty('--acc',s.accentColor)}
+function render(){renderHeader();renderTabs();const v=VIEWS[ST.tab]||VIEWS.menu;$('#main').innerHTML=v();renderCartBar();after()}
+function renderCartBar(){const n=cartCount();$('#cartbar').innerHTML=n&&ST.tab==='menu'?'<button type="button" class="cartbar" data-a="cart"><span>'+esc(T('عرض السلة'))+' · '+n+'</span><span>'+money(cartCalc().total)+'</span></button>':''}
+function after(){if(ST.tab==='card'&&ST.me&&window.QRCode){const el=$('#qr');if(el){el.innerHTML='';new QRCode(el,{text:ST.me.no,width:208,height:208,correctLevel:QRCode.CorrectLevel.M})}}}
+const branchSel=()=>{const b=ST.info.branches||[];return b.length>1?'<div class="fld"><label for="br">'+esc(T('الفرع'))+'</label><select id="br" data-br>'+b.map(x=>'<option value="'+esc(x.id)+'"'+(x.id===(ST.branch||'b_main')?' selected':'')+'>'+esc(nm(x))+'</option>').join('')+'</select></div>':''};
+const signinBox=()=>'<div class="card"><p class="muted" style="margin-top:0">'+esc(T('سجّل الدخول للطلب والاشتراك وشحن المحفظة.'))+'</p>'+loginForm()+'</div>';
+function loginForm(){const L=ST.login,dis=ST.busy?' disabled':'';
+  if(L.step==='code')return'<p>'+esc(T('أُرسل الرمز إلى '))+'<b class="ltr">'+esc(L.email)+'</b></p><div class="fld"><label for="lc">'+esc(T('الرمز المرسل إلى بريدك'))+'</label><input id="lc" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="10" data-l="code" value="'+esc(L.code)+'"></div><button type="button" class="btn pri block" data-a="verify"'+dis+'>'+esc(T('تأكيد'))+'</button><div class="row" style="margin-top:8px"><button type="button" class="btn sm" data-a="relogin">'+esc(T('تغيير البريد'))+'</button><button type="button" class="btn sm" data-a="sendCode"'+dis+'>'+esc(T('إرسال الرمز'))+'</button></div>';
+  return'<div class="fld"><label for="le">'+esc(T('البريد الإلكتروني'))+'</label><input id="le" class="ltr" type="email" inputmode="email" autocomplete="email" data-l="email" value="'+esc(L.email)+'"></div>'+(L.step==='signup'?'<div class="banner">'+esc(T('أنشئ حسابك: أدخل اسمك وجوالك ثم أرسل الرمز.'))+'</div><div class="fld"><label for="ln">'+esc(T('الاسم'))+'</label><input id="ln" autocomplete="name" data-l="name" value="'+esc(L.name)+'"></div><div class="fld"><label for="lp">'+esc(T('الجوال'))+'</label><input id="lp" class="ltr" type="tel" inputmode="tel" autocomplete="tel" data-l="phone" value="'+esc(L.phone)+'"></div>':'')+'<button type="button" class="btn pri block" data-a="sendCode"'+dis+'>'+(ST.busy?'<span class="spin"></span>':esc(T('إرسال الرمز')))+'</button>'}
+const VIEWS={
+ menu(){if(!ST.info.on)return'<div class="empty">'+esc(T('التطبيق غير متاح الآن.'))+'</div>';const m=ST.menu;if(!m)return'<div class="empty"><span class="spin"></span></div>';
+  const cats=[...new Set([...(m.cats||[]).map(c=>c.name),...m.products.map(p=>p.cat)])].filter(c=>m.products.some(p=>p.cat===c));
+  let h=branchSel()+installHint();
+  h+='<div class="chips">'+[['',T('الكل')],...cats.map(c=>[c,LANG==='en'?((m.cats.find(x=>x.name===c)||{}).nameEn||c):c])].map(([k,l])=>'<button type="button" data-cat="'+esc(k)+'" class="'+(ST.cat===k?'on':'')+'">'+esc(l)+'</button>').join('')+'</div>';
+  const list=m.products.filter(p=>!ST.cat||p.cat===ST.cat);
+  h+='<div class="grid">'+list.map(p=>{const n=ST.cart.filter(c=>c.p===p.id).reduce((a,c)=>a+c.qty,0),d=bestDisc(p,p.price,1),o=liveOffers().find(o=>offerHits(o,p));
+   return'<div class="prod">'+(n?'<span class="cnt">'+n+'</span>':'')+'<button type="button" class="add" data-a="add" data-id="'+esc(p.id)+'" aria-label="'+esc(T('أضف'))+'">+</button>'+iconSvg(p)+'<b>'+esc(nm(p))+'</b>'+(o?pill(o.name,'acc'):'')+'<span class="pr">'+(d?'<del>'+num(p.price)+'</del> ':'')+money(p.price-d)+'</span></div>'}).join('')+'</div>';
+  return h},
+ offers(){const m=ST.menu;if(!m)return'<div class="empty"><span class="spin"></span></div>';let h='<h2>'+esc(T('العروض'))+'</h2>';
+  h+=m.offers.length?m.offers.map(o=>{const b=o.type==='percent'?num(o.value).replace(/\.00$/,'')+'%':o.type==='amount'?num(o.value).replace(/\.00$/,''):'+'+o.get,tgt=o.targetType==='product'?nm(prodBy(o.target)||{name:''}):o.targetType==='cat'?o.target:T('الكل'),txt=o.type==='bxgy'?T('اشترِ ')+o.buy+T(' واحصل على ')+o.get+T(' مجانًا'):T('خصم ')+b;
+   return'<div class="card offer"><div class="badge">'+esc(b)+'</div><div><b>'+esc(o.name)+'</b><div class="muted sm">'+esc(txt)+' · '+esc(tgt)+(o.to?' · '+esc(T('حتى '))+esc(o.to):'')+'</div></div></div>'}).join(''):'<div class="card empty">'+esc(T('لا توجد عروض حاليًا.'))+'</div>';
+  if(m.plans.length)h+='<h2>'+esc(T('باقات الاشتراك'))+'</h2>'+m.plans.map(p=>'<div class="card"><div class="between"><b>'+esc(nm(p))+'</b>'+pill(p.period==='annual'?'سنوي':'شهري','acc')+'</div><div class="between" style="margin-top:6px"><span class="muted sm">'+esc(T('خصم المشتريات '))+num(p.discount).replace(/\.00$/,'')+'%</span><span><b>'+money(p.price)+'</b>'+(p.regular>p.price?' <del class="muted sm">'+num(p.regular)+'</del>':'')+'</span></div><button type="button" class="btn pri block" style="margin-top:10px" data-a="subReq" data-id="'+esc(p.id)+'">'+esc(T('اشتراك جديد'))+'</button></div>').join('');
+  return h},
+ card(){if(!ST.me)return signinBox();const me=ST.me,t=tierOf(me);
+  return'<div class="member '+t[1]+'"><div class="tier">'+esc(T('المستوى'))+': '+esc(T(t[0]))+'</div><h2>'+esc(me.name)+'</h2><div class="qr" id="qr"></div><div class="no ltr">'+esc(me.no)+'</div></div><p class="muted sm" style="text-align:center">'+esc(T('اعرض هذا الرمز للكاشير ليتعرف عليك ويضيف مزاياك.'))+'</p>'+
+   (me.wallets||[]).map(w=>'<div class="card between"><span>'+esc(T('المحفظة'))+' <span class="ltr muted sm">'+esc(w.no)+'</span></span><b>'+money(w.balance)+'</b></div>').join('')},
+ orders(){if(!ST.me)return signinBox();const o=ST.me.orders||[];
+  return'<h2>'+esc(T('طلباتي'))+'</h2>'+(o.length?o.map(x=>{const s=ORD[x.status]||['جديد','warn'];return'<div class="card"><div class="between"><b class="ltr">'+(x.no?esc(x.no):esc(T('بانتظار المحل')))+'</b>'+pill(s[0],s[1])+'</div><div class="muted sm">'+esc(new Date(x.at).toLocaleString(LANG==='en'?'en-GB':'ar-SA-u-nu-latn',{dateStyle:'medium',timeStyle:'short'}))+' · '+esc(T({take:'استلام من المحل',here:'داخل المحل',deliver:'توصيل'}[x.type]||''))+(x.table?' · '+esc(T('الطاولة'))+' '+esc(x.table):'')+'</div><div class="sm" style="margin:6px 0">'+(x.lines||[]).map(l=>{const p=prodBy(l.p);return esc(p?nm(p):'—')+(l.size?' ('+esc(T({s:'صغير',m:'وسط',l:'كبير'}[l.size]))+')':'')+' × '+l.qty}).join('، ')+(x.reject?'<div class="muted sm">'+esc(T(REJ[x.reject]||x.reject))+'</div>':'')+'</div><div class="between"><span class="muted sm">'+esc(T('الإجمالي التقريبي'))+'</span><b>'+money(x.total)+'</b></div>'+(x.status==='done'||x.status==='cancel'?'<button type="button" class="btn sm" style="margin-top:8px" data-a="again" data-id="'+esc(x.id)+'">'+esc(T('أعد الطلب'))+'</button>':'')+'</div>'}).join(''):'<div class="card empty">'+esc(T('لا توجد طلبات بعد.'))+'</div>')},
+ account(){if(!ST.me)return signinBox();const me=ST.me;let h='';
+  h+='<div class="card"><div class="between"><h2 style="margin:0">'+esc(T('المحفظة'))+'</h2><button type="button" class="btn sm acc" data-a="depReq">'+esc(T('شحن المحفظة'))+'</button></div>'+((me.wallets||[]).length?me.wallets.map(w=>'<div class="line"><div class="grow"><span class="ltr">'+esc(w.no)+'</span>'+(w.rate?'<div class="muted sm">'+esc(T('نسبة خصم المحفظة '))+num(w.rate).replace(/\.00$/,'')+'%</div>':'')+'</div><b>'+money(w.balance)+'</b></div>').join(''):'<p class="muted sm">'+esc(T('لا توجد محفظة بعد. اطلب الشحن وتُنشأ محفظتك عند تأكيد الكاشير.'))+'</p>')+'</div>';
+  h+='<div class="card"><div class="between"><h2 style="margin:0">'+esc(T('الاشتراكات'))+'</h2><button type="button" class="btn sm acc" data-a="subReq">'+esc(T('اشتراك جديد'))+'</button></div>'+((me.subs||[]).length?me.subs.map(s=>{const t=SUBST[s.state]||SUBST.ended;return'<div class="line"><div class="grow"><b>'+esc(LANG==='en'?(s.planEn||s.plan):s.plan)+'</b><div class="muted sm"><span class="ltr">'+esc(s.no)+'</span> · '+esc(s.start)+' → '+esc(s.end)+'</div></div>'+pill(t[0],t[1])+'</div>'}).join(''):'<p class="muted sm">'+esc(T('لا يوجد اشتراك.'))+'</p>')+'</div>';
+  if((me.requests||[]).length)h+='<div class="card"><h2>'+esc(T('طلباتك'))+'</h2>'+me.requests.map(r=>{const t=REQ[r.status]||REQ.pending;return'<div class="line"><div class="grow"><b>'+esc(T(r.kind==='sub'?'طلب اشتراك':'طلب شحن'))+'</b><div class="muted sm">'+(r.kind==='sub'?esc(r.planName)+' · ':'')+money(r.amount)+' · '+esc(T('مرجع '))+'<span class="ltr">'+esc(r.ref)+'</span>'+(r.reason?'<br>'+esc(T('سبب الرفض: '))+esc(T(REJ[r.reason]||r.reason)):'')+'</div></div>'+pill(t[0],t[1])+'</div>'}).join('')+'</div>';
+  h+='<div class="card"><h2>'+esc(T('بياناتي'))+'</h2><div class="fld"><label for="pn">'+esc(T('الاسم'))+'</label><input id="pn" value="'+esc(me.name)+'"></div><div class="fld"><label for="pp">'+esc(T('الجوال'))+'</label><input id="pp" class="ltr" type="tel" value="'+esc(me.phone)+'"></div><div class="fld"><label>'+esc(T('البريد الإلكتروني'))+'</label><div class="ltr">'+esc(me.email)+'</div></div><div class="row"><button type="button" class="btn pri" data-a="saveProfile">'+esc(T('حفظ'))+'</button><button type="button" class="btn" data-a="logout">'+esc(T('الخروج'))+'</button></div></div>';
+  return h}
+};
+let deferredInstall=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;if(ST.tab==='menu')render()});
+const standalone=()=>window.matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+function installHint(){if(standalone()||store.get('app_noinst'))return'';const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);if(!deferredInstall&&!ios)return'';
+  return'<div class="card install"><img src="icon-192.png" width="40" height="40" alt=""><div style="flex:1"><b>'+esc(T('ثبّت التطبيق على هاتفك'))+'</b>'+(ios?'<div class="muted sm">'+esc(T('في آيفون: زر المشاركة ثم «إضافة إلى الشاشة الرئيسية».'))+'</div>':'')+'</div>'+(deferredInstall?'<button type="button" class="btn sm pri" data-a="install">'+esc(T('تثبيت'))+'</button>':'')+'<button type="button" class="btn sm" data-a="noinst" aria-label="'+esc(T('إغلاق'))+'">×</button></div>'}
+
+/* ---------- sheets ---------- */
+function sheet(html){$('#sheet').innerHTML=html?'<div class="sheet" data-a="closeSheet"><div class="in" data-stop="1">'+html+'</div></div>':''}
+function sizeSheet(p,z){z=z||'m';sheet('<h2>'+esc(nm(p))+'</h2><div class="muted sm">'+esc(T('الحجم'))+'</div><div class="sizes">'+[['s','صغير'],['m','وسط'],['l','كبير']].map(([k,l])=>'<button type="button" data-a="pickSize" data-id="'+esc(p.id)+'" data-z="'+k+'" class="'+(z===k?'on':'')+'">'+esc(T(l))+'<br><b>'+money(sizePrice(p,k))+'</b></button>').join('')+'</div><button type="button" class="btn pri block" data-a="addSized" data-id="'+esc(p.id)+'" data-z="'+z+'">'+esc(T('إضافة إلى السلة'))+'</button>')}
+function cartSheet(){const c=cartCalc(),types=ST.info.types||[];if(!types.includes(ST.type))ST.type=types[0]||'take';
+  if(!c.lines.length){sheet('<div class="empty">'+esc(T('السلة فارغة.'))+'</div><button type="button" class="btn block" data-a="closeSheet">'+esc(T('إغلاق'))+'</button>');return}
+  let h='<div class="between"><h2>'+esc(T('السلة'))+'</h2><button type="button" class="btn sm" data-a="closeSheet">×</button></div><div class="card">'+c.lines.map((l,i)=>'<div class="line"><div class="grow"><b>'+esc(nm(l.p))+'</b>'+(l.c.size?' <span class="muted sm">('+esc(T({s:'صغير',m:'وسط',l:'كبير'}[l.c.size]))+')</span>':'')+'<div class="muted sm">'+money(l.price)+(l.d?' · −'+num(l.d):'')+'</div></div><div class="qty"><button type="button" data-a="dec" data-i="'+i+'">−</button><b>'+l.c.qty+'</b><button type="button" data-a="inc" data-i="'+i+'">+</button></div></div>').join('')+'</div>';
+  h+=branchSel()+'<div class="muted sm">'+esc(T('نوع الطلب'))+'</div><div class="seg">'+types.map(k=>'<button type="button" data-a="type" data-v="'+k+'" class="'+(ST.type===k?'on':'')+'">'+esc(T({take:'استلام من المحل',here:'داخل المحل',deliver:'توصيل'}[k]))+'</button>').join('')+'</div>';
+  if(ST.type==='here'){const tb=ST.menu.tables||[];h+='<div class="fld"><label for="tb">'+esc(T('الطاولة'))+'</label><select id="tb" data-tb><option value="">'+esc(T('اختر الطاولة'))+'</option>'+tb.map(t=>'<option value="'+esc(t.id)+'"'+(ST.table===t.id?' selected':'')+'>'+esc(t.no)+(t.area?' · '+esc(LANG==='en'&&t.areaEn?t.areaEn:t.area):'')+'</option>').join('')+'</select></div>'}
+  if(ST.type==='deliver')h+='<div class="fld"><label for="ad">'+esc(T('عنوان التوصيل'))+'</label><textarea id="ad" rows="2" data-ad>'+esc(ST.address)+'</textarea></div>';
+  h+='<div class="fld"><label for="nt">'+esc(T('ملاحظة'))+'</label><input id="nt" data-nt value="'+esc(ST.note)+'"></div>';
+  const ws=(ST.me?.wallets||[]).filter(w=>w.balance>0);
+  if(ws.length){if(ST.pay==='wallet'&&!ws.some(w=>w.id===ST.wallet))ST.wallet=ws[0].id;h+='<div class="muted sm">'+esc(T('الدفع'))+'</div><div class="seg"><button type="button" data-a="pay" data-v="counter" class="'+(ST.pay!=='wallet'?'on':'')+'">'+esc(T('الدفع في المحل'))+'</button><button type="button" data-a="pay" data-v="wallet" class="'+(ST.pay==='wallet'?'on':'')+'">'+esc(T('من المحفظة'))+' · '+money(ws[0].balance)+'</button></div>'}else ST.pay='counter';
+  h+='<div class="card">'+(c.disc?'<div class="tot sm"><span>'+esc(T('خصم العروض'))+'</span><span>−'+num(c.disc)+'</span></div>':'')+(c.sd?'<div class="tot sm"><span>'+esc(T('خصم الاشتراك'))+'</span><span>−'+num(c.sd)+'</span></div>':'')+(c.fee?'<div class="tot sm"><span>'+esc(T('رسوم التوصيل'))+'</span><span>'+num(c.fee)+'</span></div>':'')+'<div class="tot big"><span>'+esc(T('الإجمالي التقريبي'))+'</span><span>'+money(c.total)+'</span></div><div class="muted sm">'+esc(T('السعر النهائي يُحسب عند الكاشير.'))+'</div></div>';
+  h+=ST.me?'<button type="button" class="btn pri block" data-a="placeOrder"'+(ST.busy?' disabled':'')+'>'+(ST.busy?'<span class="spin"></span>':esc(T('إتمام الطلب')))+'</button>':'<div class="card">'+loginForm()+'</div>';
+  sheet(h)}
+let REQ_F=null;
+function reqSheet(){const f=REQ_F,m=ST.menu,dis=ST.busy?' disabled':'';let h='<div class="between"><h2>'+esc(T(f.kind==='sub'?'اشتراك جديد':'شحن المحفظة'))+'</h2><button type="button" class="btn sm" data-a="closeSheet">×</button></div><div class="banner">'+esc(T('تدفع في المحل، ويؤكد الكاشير الطلب بعد استلام المبلغ.'))+'</div>'+branchSel();
+  if(f.kind==='sub')h+='<div class="fld"><label for="rp">'+esc(T('الباقة'))+'</label><select id="rp" data-rf="plan">'+m.plans.map(p=>'<option value="'+esc(p.id)+'"'+(f.plan===p.id?' selected':'')+'>'+esc(nm(p))+' · '+money(p.price)+'</option>').join('')+'</select></div>';
+  else h+='<div class="fld"><label for="ra">'+esc(T('المبلغ'))+'</label><input id="ra" type="number" inputmode="decimal" min="1" step="any" data-rf="amount" value="'+esc(f.amount)+'"></div>';
+  if(f.step==='code')h+='<p class="sm">'+esc(T('أدخل الرمز المرسل إلى بريدك لتأكيد الطلب.'))+' <span class="ltr muted">'+esc(ST.me.email)+'</span></p><div class="fld"><label for="rc">'+esc(T('رمز التأكيد'))+'</label><input id="rc" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="10" data-rf="code" value="'+esc(f.code)+'"></div><button type="button" class="btn pri block" data-a="reqSubmit"'+dis+'>'+esc(T('إرسال الطلب'))+'</button><button type="button" class="btn block" style="margin-top:8px" data-a="reqCode"'+dis+'>'+esc(T('إرسال الرمز'))+'</button>';
+  else h+='<button type="button" class="btn pri block" data-a="reqCode"'+dis+'>'+(ST.busy?'<span class="spin"></span>':esc(T('إرسال الرمز')))+'</button>';
+  sheet(h)}
+
+/* ---------- actions ---------- */
+const reopen=()=>{if($('#sheet').innerHTML){if(REQ_F)reqSheet();else if($('#sheet').dataset.k==='cart')cartSheet()}};
+const A={
+ cart(){$('#sheet').dataset.k='cart';REQ_F=null;cartSheet()},
+ closeSheet(){sheet('');$('#sheet').dataset.k='';REQ_F=null},
+ add(d){const p=prodBy(d.id);if(!p)return;if(p.sized)return sizeSheet(p);addLine(p.id,'')},
+ pickSize(d){sizeSheet(prodBy(d.id),d.z)},
+ addSized(d){addLine(d.id,d.z);A.closeSheet()},
+ inc(d){ST.cart[+d.i].qty=Math.min(50,ST.cart[+d.i].qty+1);saveCart();cartSheet();render()},
+ dec(d){const c=ST.cart[+d.i];c.qty--;if(c.qty<1)ST.cart.splice(+d.i,1);saveCart();cartSheet();render()},
+ type(d){ST.type=d.v;cartSheet()},
+ pay(d){ST.pay=d.v;cartSheet()},
+ async sendCode(){const L=ST.login;L.email=L.email.trim().toLowerCase();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(L.email))return toast(T('أدخل بريدًا إلكترونيًا صحيحًا.'));if(L.step==='signup'){if(L.name.trim().length<2)return toast(T('أدخل اسمك.'));if(L.phone.replace(/\D/g,'').length<8)return toast(T('الجوال غير صحيح.'))}
+  ST.busy=true;redraw();const r=await api('/code',{body:{email:L.email,name:L.name,phone:L.phone}});ST.busy=false;
+  if(r.ok&&r.j.needSignup){L.step='signup';redraw();return}
+  if(!r.ok){redraw();return toast(errMsg(r.j))}
+  store.set('app_email',L.email);L.step='code';L.code='';redraw();setTimeout(()=>{const e=$('#lc');e&&e.focus()},50)},
+ async verify(){const L=ST.login;if(!/^\d{6,10}$/.test(L.code))return toast(T('الرمز غير صحيح أو انتهت صلاحيته.'));ST.busy=true;redraw();const r=await api('/verify',{body:{email:L.email,code:L.code}});ST.busy=false;
+  if(!r.ok){redraw();return toast(errMsg(r.j))}TOKEN=r.j.token;if(!SB)store.set('app_token',TOKEN);L.step='email';L.code='';await loadMe();if(ST.me&&!ST.me.name){A.closeSheet();ST.tab='account';toast(T('أكمل بياناتك: الاسم والجوال.'))}redraw();render()},
+ relogin(){ST.login.step='email';ST.login.code='';redraw()},
+ async placeOrder(){const c=cartCalc();if(!c.lines.length)return toast(T('السلة فارغة.'));if(ST.type==='here'&&!ST.table)return toast(T('اختر الطاولة'));if(ST.type==='deliver'&&ST.address.trim().length<8)return toast(T('أدخل عنوان التوصيل.'));
+  if(ST.type==='deliver'&&+ST.info.deliveryMin>0&&c.total-c.fee<+ST.info.deliveryMin)return toast(T('أقل مبلغ للتوصيل ')+money(ST.info.deliveryMin));
+  ST.busy=true;cartSheet();const ws=(ST.me.wallets||[]).filter(w=>w.balance>0);
+  const r=await api('/orders',{body:{branch:ST.branch||'b_main',type:ST.type,table:ST.table,address:ST.address,note:ST.note,pay:ST.pay,wallet:ST.pay==='wallet'&&ws[0]?ws[0].id:'',items:ST.cart.map(x=>({p:x.p,size:x.size,qty:x.qty}))}});ST.busy=false;
+  if(!r.ok){cartSheet();return toast(r.j.error==='min'?T('أقل مبلغ للتوصيل ')+money(ST.info.deliveryMin):errMsg(r.j))}
+  ST.cart=[];ST.note='';saveCart();store.set('app_addr',ST.address);A.closeSheet();toast(r.j.no?T('أُرسل طلبك برقم ')+r.j.no:T('أُرسل طلبك، ويظهر رقمه عند استلام المحل له.'));ST.tab='orders';await loadMe();render()},
+ again(d){const o=(ST.me.orders||[]).find(x=>x.id===d.id);if(!o)return;(o.lines||[]).forEach(l=>{if(prodBy(l.p))addLine(l.p,l.size,+l.qty,true)});saveCart();ST.tab='menu';render();A.cart()},
+ subReq(d){if(!ST.me){ST.tab='account';render();return}REQ_F={kind:'sub',plan:(d&&d.id)||(ST.menu.plans[0]||{}).id||'',amount:'',code:'',step:'start'};if(!ST.menu.plans.length)return toast(T('اختر الباقة.'));$('#sheet').dataset.k='req';reqSheet()},
+ depReq(){REQ_F={kind:'deposit',plan:'',amount:'',code:'',step:'start'};$('#sheet').dataset.k='req';reqSheet()},
+ async reqCode(){const f=REQ_F;if(f.kind==='deposit'&&!(+f.amount>=1&&+f.amount<=10000))return toast(T('أدخل مبلغًا بين 1 و10000.'));if(f.kind==='sub'&&!f.plan)return toast(T('اختر الباقة.'));
+  ST.busy=true;reqSheet();const r=await api('/code',{body:{purpose:f.kind}});ST.busy=false;if(!r.ok){reqSheet();return toast(errMsg(r.j))}f.step='code';f.code='';reqSheet();setTimeout(()=>{const e=$('#rc');e&&e.focus()},50)},
+ async reqSubmit(){const f=REQ_F;if(!/^\d{6,10}$/.test(f.code))return toast(T('الرمز غير صحيح أو انتهت صلاحيته.'));const w=(ST.me.wallets||[])[0];
+  ST.busy=true;reqSheet();const r=await api('/requests',{body:{kind:f.kind,plan:f.plan,amount:+f.amount,wallet:f.kind==='deposit'&&w?w.id:'',branch:ST.branch||'b_main',code:f.code}});ST.busy=false;
+  if(!r.ok){reqSheet();return toast(errMsg(r.j))}A.closeSheet();toast(T('أُرسل طلبك.')+' '+T('مرجع ')+r.j.ref);ST.tab='account';await loadMe();render()},
+ async saveProfile(){const n=$('#pn').value.trim(),p=$('#pp').value.trim();if(n.length<2)return toast(T('أدخل اسمك.'));if(p.replace(/\D/g,'').length<8)return toast(T('الجوال غير صحيح.'));const r=await api('/profile',{body:{name:n,phone:p}});if(!r.ok)return toast(errMsg(r.j));toast(T('حُفظت بياناتك.'));await loadMe();render()},
+ async logout(){await api('/logout',{body:{}});TOKEN=null;store.set('app_token',null);ST.me=null;ST.tab='menu';render()},
+ async install(){if(!deferredInstall)return;deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;render()},
+ noinst(){store.set('app_noinst','1');render()}
+};
+function addLine(p,size,qty,quiet){qty=qty||1;const c=ST.cart.find(x=>x.p===p&&x.size===size);if(c)c.qty=Math.min(50,c.qty+qty);else ST.cart.push({p,size,qty});saveCart();if(!quiet){render();toast('✓ '+nm(prodBy(p)))}}
+function redraw(){if($('#sheet').innerHTML){$('#sheet').dataset.k==='cart'?cartSheet():render()}else render()}
+document.addEventListener('click',e=>{const s=e.target.closest('[data-stop]'),a=e.target.closest('[data-a]');if(a&&a.dataset.a==='closeSheet'&&s&&a===a.closest('.sheet'))return;
+  if(a&&!(a.classList.contains('sheet')&&s)){e.preventDefault();const f=A[a.dataset.a];if(f)f(a.dataset);return}
+  const g=e.target.closest('[data-go]');if(g){ST.tab=g.dataset.go;render();if(['orders','account','card'].includes(ST.tab))loadMe().then(()=>{if(['orders','account','card'].includes(ST.tab))render()});window.scrollTo(0,0);return}
+  const c=e.target.closest('[data-cat]');if(c){ST.cat=c.dataset.cat;render()}});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.l!==undefined){ST.login[t.dataset.l]=t.value;return}if(t.dataset.rf!==undefined){REQ_F[t.dataset.rf]=t.value;return}if(t.dataset.ad!==undefined){ST.address=t.value;return}if(t.dataset.nt!==undefined){ST.note=t.value;return}});
+document.addEventListener('change',async e=>{const t=e.target;if(t.dataset.br!==undefined){ST.branch=t.value;store.set('app_branch',t.value);ST.table='';await loadMenu();reopen();render()}if(t.dataset.tb!==undefined){ST.table=t.value}if(t.dataset.rf!==undefined){REQ_F[t.dataset.rf]=t.value}});
+$('#hlang').addEventListener('click',()=>{LANG=LANG==='en'?'':'en';store.set('app_lang',LANG);render();reopen()});
+// Order status updates while the orders screen is open.
+setInterval(async()=>{if(document.visibilityState==='visible'&&ST.me&&(ST.tab==='orders'||ST.tab==='account')&&!$('#sheet').innerHTML){await loadMe();render()}},20000);
+(async function boot(){
+  if('serviceWorker' in navigator&&location.protocol==='https:'||location.hostname==='localhost')try{navigator.serviceWorker.register('sw.js')}catch(e){}
+  const r=await api('/info');if(!r.ok){$('#main').innerHTML='<div class="empty">'+esc(T('تعذر الاتصال بالخادم.'))+'</div>';return}
+  ST.info=r.j;if(!LANG&&ST.info.shop.defaultLang==='en')LANG='en';if(!(ST.info.branches||[]).some(b=>b.id===ST.branch))ST.branch=(ST.info.branches[0]||{}).id||'b_main';
+  if(!ST.info.mailReady)ST.login.note=true;render();await Promise.all([ST.info.on?loadMenu():null,loadMe()]);render()})();
+</script>
+</body>
+</html>
