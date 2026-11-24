@@ -307,7 +307,9 @@ function redraw(){if($('#sheet').innerHTML){$('#sheet').dataset.k==='cart'?cartS
 document.addEventListener('click',e=>{const s=e.target.closest('[data-stop]'),a=e.target.closest('[data-a]');if(a&&a.dataset.a==='closeSheet'&&s&&a===a.closest('.sheet'))return;
   if(a&&!(a.classList.contains('sheet')&&s)){e.preventDefault();const f=A[a.dataset.a];if(f)f(a.dataset);return}
   const g=e.target.closest('[data-go]');if(g){ST.tab=g.dataset.go;render();if(['orders','account','card'].includes(ST.tab))loadMe().then(()=>{if(['orders','account','card'].includes(ST.tab))render()});window.scrollTo(0,0);return}
-  const c=e.target.closest('[data-cat]');if(c){ST.cat=c.dataset.cat;render()}});
+  const c=e.target.closest('[data-cat]');if(c){const row=$('.chips'),sl=row?row.scrollLeft:0,y=window.scrollY;ST.cat=c.dataset.cat;render();
+    /* Redrawing rebuilds the chip row from its start, which hid the chosen chip and looked like a jump back to "All". Keep the row and the page where they were. */
+    const nr=$('.chips');if(nr){nr.scrollLeft=sl;const on=nr.querySelector('.on');if(on)on.scrollIntoView({block:'nearest',inline:'nearest'})}window.scrollTo(0,Math.min(y,nr?nr.getBoundingClientRect().top+window.scrollY-8:y))}});
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset.l!==undefined){ST.login[t.dataset.l]=t.value;return}if(t.dataset.rf!==undefined){REQ_F[t.dataset.rf]=t.value;return}if(t.dataset.ad!==undefined){ST.address=t.value;return}if(t.dataset.nt!==undefined){ST.note=t.value;return}});
 document.addEventListener('change',async e=>{const t=e.target;if(t.dataset.br!==undefined){ST.branch=t.value;store.set('app_branch',t.value);ST.table='';await loadMenu();reopen();render()}if(t.dataset.tb!==undefined){ST.table=t.value}if(t.dataset.rf!==undefined){REQ_F[t.dataset.rf]=t.value}});
 $('#hlang').addEventListener('click',()=>{LANG=LANG==='en'?'':'en';store.set('app_lang',LANG);render();reopen()});
