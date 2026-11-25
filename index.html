@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="الكوفي شوب">
 <title>الكوفي شوب</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
@@ -200,7 +201,14 @@ const SUBST={live:['ساري','ok'],ended:['منتهٍ',''],soon:['لم يبدأ
 const pill=(t,c)=>'<span class="pill '+(c||'')+'">'+esc(T(t))+'</span>';
 const TABS=[['menu','القائمة','<path d="M4 6h16M4 12h16M4 18h10"/>'],['offers','العروض','<path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.5"/>'],['card','بطاقتي','<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>'],['orders','طلباتي','<path d="M6 2h12l2 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/><path d="M4 6h16M9 11h6M9 15h6"/>'],['account','حسابي','<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>']];
 function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l,ic])=>'<button type="button" data-go="'+k+'" class="'+(ST.tab===k?'on':'')+'"><svg viewBox="0 0 24 24">'+ic+'</svg>'+esc(T(l))+'</button>').join('')}
-function renderHeader(){const s=ST.info?.shop||{};$('#htitle').textContent=LANG==='en'?(s.displayEn||s.shopName||'Coffee shop'):(s.displayAr||s.shopName||'الكوفي شوب');$('#hlogo').src=s.logo||'icon-192.png';$('#hlang').textContent=LANG==='en'?'ع':'EN';document.documentElement.lang=LANG==='en'?'en':'ar';document.documentElement.dir=LANG==='en'?'ltr':'rtl';document.title=$('#htitle').textContent;if(s.primaryColor)document.documentElement.style.setProperty('--pri',s.primaryColor);if(s.accentColor)document.documentElement.style.setProperty('--acc',s.accentColor)}
+/* The shop's own name and logo also become the page title, the home-screen icon and the installed app's name. */
+let BRAND_KEY='';
+function applyBrand(s){const name=(LANG==='en'?(s.displayEn||s.shopName):(s.displayAr||s.shopName))||'';const logo=/^data:image\/(png|jpeg|webp);base64,/.test(s.logo||'')?s.logo:'';const key=name+'|'+logo.length+'|'+LANG;if(!name||key===BRAND_KEY)return;BRAND_KEY=key;document.title=name;
+  const at=document.querySelector('link[rel="apple-touch-icon"]');if(at&&logo)at.href=logo;const tm=document.querySelector('meta[name="apple-mobile-web-app-title"]');if(tm)tm.content=name;
+  try{const base=new URL('./',location.href).href,icons=logo?[{src:logo,sizes:'512x512',type:logo.slice(5,logo.indexOf(';')),purpose:'any'}]:[{src:base+'icon-192.png',sizes:'192x192',type:'image/png'},{src:base+'icon-512.png',sizes:'512x512',type:'image/png'}];
+    const m={name,short_name:name.length>12?name.slice(0,12):name,start_url:base,scope:base,display:'standalone',orientation:'portrait',dir:LANG==='en'?'ltr':'rtl',lang:LANG,background_color:'#f6f3ee',theme_color:'#17634a',icons};
+    const l=document.querySelector('link[rel="manifest"]');if(l)l.href='data:application/manifest+json;charset=utf-8,'+encodeURIComponent(JSON.stringify(m))}catch(e){}}
+function renderHeader(){const s=ST.info?.shop||{};applyBrand(s);$('#htitle').textContent=LANG==='en'?(s.displayEn||s.shopName||'Coffee shop'):(s.displayAr||s.shopName||'الكوفي شوب');$('#hlogo').src=s.logo||'icon-192.png';$('#hlang').textContent=LANG==='en'?'ع':'EN';document.documentElement.lang=LANG==='en'?'en':'ar';document.documentElement.dir=LANG==='en'?'ltr':'rtl';document.title=$('#htitle').textContent;if(s.primaryColor)document.documentElement.style.setProperty('--pri',s.primaryColor);if(s.accentColor)document.documentElement.style.setProperty('--acc',s.accentColor)}
 function render(){renderHeader();renderTabs();const v=VIEWS[ST.tab]||VIEWS.menu;$('#main').innerHTML=v();renderCartBar();after()}
 function renderCartBar(){const n=cartCount();$('#cartbar').innerHTML=n&&ST.tab==='menu'?'<button type="button" class="cartbar" data-a="cart"><span>'+esc(T('عرض السلة'))+' · '+n+'</span><span>'+money(cartCalc().total)+'</span></button>':''}
 function after(){if(ST.tab==='card'&&ST.me&&window.QRCode){const el=$('#qr');if(el){el.innerHTML='';new QRCode(el,{text:ST.me.no,width:208,height:208,correctLevel:QRCode.CorrectLevel.M})}}}
