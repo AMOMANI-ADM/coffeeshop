@@ -92,12 +92,15 @@ h3{font-size:15px;margin:10px 0 6px}
 .spin{display:inline-block;width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 /* ---- Coffee-house theme: warm cream, deep green and gold, Arabic type, soft cards ---- */
-@font-face{font-family:"CS Sans";src:url(fonts/NotoSansArabic-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"CS Sans";src:url(fonts/NotoSansArabic-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"CS Kufi";src:url(fonts/NotoKufiArabic-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+/* Default type: Figtree for English letters and numbers, Tajawal for Arabic (both free, SIL Open Font License). */
+@font-face{font-family:"CS En";src:url(fonts/Figtree.woff2) format("woff2");font-weight:300 900;font-display:swap}
+@font-face{font-family:"CS Ar";src:url(fonts/Tajawal-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"CS Ar";src:url(fonts/Tajawal-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"CS Ar";src:url(fonts/Tajawal-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"CS Ar";src:url(fonts/Tajawal-ExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
 :root{--pri:#0d4f3c;--pri2:#16725a;--acc:#c9a45c;--coffee:#2b1d14;--bg:#f7f2ea;--card:#fffdf9;--ink:#2b1d14;--mut:#7c7066;--line:#ece3d6;--r:20px;--shadow:0 6px 22px rgba(43,29,20,.08)}
-html,body{font-family:"CS Sans","Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg)}
-h1,h2,h3,.kufi,.prod b,.member h2,.hero h2{font-family:"CS Kufi","CS Sans",sans-serif;letter-spacing:0}
+html,body{font-family:"CS En","CS Ar","Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);font-size:15.5px}
+h1,h2,h3,.kufi,.prod b,.member h2,.hero h2{font-family:"CS En","CS Ar",sans-serif;font-weight:800;letter-spacing:0}
 header{background:var(--bg);color:var(--ink);box-shadow:none;padding:12px 16px 8px;border-bottom:1px solid transparent}
 header.scrolled{border-bottom-color:var(--line);box-shadow:0 2px 12px rgba(43,29,20,.06)}
 header img{width:40px;height:40px;border:2px solid var(--acc);padding:2px}
@@ -118,7 +121,7 @@ h2{font-size:18px;color:var(--coffee)}
 .hero .stats{display:flex;gap:10px;position:relative;z-index:1}
 .hero .stat{flex:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:10px 12px;cursor:pointer;color:#fff;text-align:start}
 .hero .stat small{display:block;font-size:11.5px;opacity:.8}
-.hero .stat b{font-size:16px;font-family:"CS Kufi","CS Sans",sans-serif}
+.hero .stat b{font-size:16px;font-weight:800}
 .hero .tierdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:6px;vertical-align:middle;background:var(--acc)}
 .otype{display:flex;gap:8px;margin:0 0 14px}
 .otype button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;font-weight:700;color:var(--coffee);box-shadow:var(--shadow)}
@@ -131,7 +134,7 @@ h2{font-size:18px;color:var(--coffee)}
 .promo .pc{flex:0 0 78%;max-width:320px;scroll-snap-align:start;border-radius:22px;padding:16px;color:var(--coffee);background:linear-gradient(135deg,#f3e3c3,#e7c98d);box-shadow:var(--shadow);position:relative;overflow:hidden;min-height:118px}
 .promo .pc:nth-child(3n+2){background:linear-gradient(135deg,#e5efe9,#bfd9cc)}
 .promo .pc:nth-child(3n){background:linear-gradient(135deg,#f1dfd6,#dcb7a3)}
-.promo .pc .big{font-family:"CS Kufi","CS Sans",sans-serif;font-size:28px;line-height:1.1;color:var(--pri)}
+.promo .pc .big{font-weight:800;font-size:28px;line-height:1.1;color:var(--pri)}
 .promo .pc b{display:block;margin-top:6px}
 .promo .pc small{color:#5e5148}
 /* Categories as a sticky row of tabs */
